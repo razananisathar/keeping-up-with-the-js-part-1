@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title></title>
+  <style type="text/css">
+    .rectangle {
+        width:300px;
+        height:150px;
+    }
+    </style>
+</head>
+<body onload="print()">
+
+<script type="text/javascript">
+/*
+ *  Assignment: Homework Assignment #7: The DOM.
+ *  Description:  Simple web page with DOM manipulation.
+ */
+
+//@desc: Set page title.
+const setTitle = () => {
+    document.title = "Favorite Colors";
+};
+
+//@desc: Create H1 element.
+const createH1 = () => {
+    const elH1 = document.createElement("h1");
+    elH1.innerText = "Favorite Colors";
+    
+    document.body.insertBefore(elH1, document.body.firstChild);
+};
+
+//@desc: Create H2 element after H1 element.
+const createH2 = (el) => {
+    const elH2 = document.createElement("h2");
+    elH2.innerText = "HTML Hex color codes for favorite colors.";
+   
+    document.body.firstChild.after(elH2);
+};
+
+//@desc: Create div element after H2 element.
+const createWrapperDIV = () => {
+    const wrapperDIV = document.createElement("div");
+    wrapperDIV.id = "rectangleWrapper";
+    
+    document.body.childNodes[1].after(wrapperDIV);
+};
+
+//@desc: Create rectangle DIV elements & text nodes.
+const createRectDIVs = (wrapperDIV, bgColors) => {
+  
+    for(let i = 1; i <= 10; i++) {
+        let rectDIV = document.createElement("div"); 
+
+        rectDIV.id = "rect" + i;
+        rectDIV.classList.add("rectangle");
+        rectDIV.style.backgroundColor = bgColors[i-1];
+
+        wrapperDIV.appendChild(rectDIV);
+        
+        //Text below each rectangle.
+        let txt = document.createTextNode(bgColors[i-1]);
+        rectDIV.after(txt);
+    }
+};
+
+//@desc: Set styles to wrappper DIV.
+const setPaddingToWrapperDIV = (wrapperDIV, pTop, pBottom, pRight, pLeft) => {
+    wrapperDIV.style.paddingTop = pTop;
+    wrapperDIV.style.paddingBottom = pBottom;
+    wrapperDIV.style.paddingRight = pRight;
+    wrapperDIV.style.paddingLeft = pLeft;
+}
+
+//@desc: Write the rectangle DIV ids to the console on page load.
+function print() {
+    const rectDIVs = document.querySelectorAll(".rectangle");
+
+    console.log("Here are the rectangle IDs:");
+    for (prop of rectDIVs)  {
+        console.log(prop.id);
+    }
+};
+
+setTitle();
+createH1();
+createH2();
+createWrapperDIV();
+
+const rectWrapperDIV = document.getElementById("rectangleWrapper");
+
+const bgColors = ["#EC7063", "#A569BD", "#5DADE2", "#48C9B0", "#58D68D", "#F5B041", "#DC7633", "#CACFD2","#99A3A4", "#566573"];
+
+createRectDIVs(rectWrapperDIV, bgColors);
+setPaddingToWrapperDIV(rectWrapperDIV, "50px", 0, "50px", "50px");        
+</script>
+</body>
+</html>
