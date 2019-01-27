@@ -114,4 +114,5 @@ function clearBoard() {
     }
 
     count = 0;
+    clicks.length = 0;
 }
