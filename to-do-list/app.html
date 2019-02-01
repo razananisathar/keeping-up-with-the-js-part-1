@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>To-do Application</title>
+  <link rel="stylesheet" type="text/css" href="app.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
+</head>
+<body>
+    <div class="" id="index">
+        <h1>To-do</h1>
+        <h2>The easiest way to get stuff done, every day.</h2>
+        <button type="button" class="btn signup" id="btnSignup">Sign Up</button>&nbsp;
+        <button type="button" class="btn login" id="btnLogin">Log In</button>
+    </div>
+
+    <div class="hide" id="signup">
+        <h2>Sign up</h2>
+        <form class="" id="formSignup" method="post" action="">       
+            <div class="form-field">
+                <label>First Name</label>
+                <input type="text" id="fname" name="fname" />
+                <p class="error"></p>
+            </div>
+            <div class="form-field">
+                <label>Last Name</label>
+                <input type="text" id="lname" name="lname" />
+                <p class="error"></p>
+            </div>
+            <div class="form-field">
+                <label>Email</label>
+                <input type="text" id="email" name="email" />
+                <p class="error"></p>
+            </div>
+            <div class="form-field">
+                <label>Password</label>
+                <input type="password" id="password" name="password" />
+                <p class="error"></p>
+            </div>
+            <div class="form-field">
+                <input type="checkbox" id="terms" name="terms" />
+                <label class="label-inline">I agree to the Terms of Use</label>
+                <p class="error"></p>
+            </div>
+            <div class="form-field">
+                <button type="submit" class="btn">Sign up</button>
+                <button type="button" class="btn" id="btnBackSignup">Back</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="hide" id="login">
+        <h2>Log in</h2>
+        <form class="" id="formLogin" method="post" action="">       
+            <div class="form-field">
+                <label>Email</label>
+                <input type="text" name="email" id="loginEmail" />
+                <p class="error"></p>
+            </div>
+            <div class="form-field">
+                <label>Password</label>
+                <input type="password" name="password" id="loginPassword" />
+                <p class="error"></p>
+            </div>
+            <div class="form-field">
+                <button type="submit" class="btn">Log in</button>
+                <button type="button" class="btn" id="btnBackLogin">Back</button>
+            </div>
+        </form>
+    </div>
+    
+    <div class="" id="app">
+        <div class="hide" id="settings">
+            <p>Logged in as <span id="loggedInUser"></span></p>
+            <button class="btn" id="btnDashboard">Dashboard</button>
+            <button class="btn" id="btnAccountSettings">Account settings</button>
+            <button class="btn btn-red" id="btnLogout">Log out</button>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="hide" id="dashboard">
+            <h2>Dashboard</h2>
+            <p class="new-todo">Start creating your first to-do list</p>
+            <button type="button" class="btn" id="btnNewTodoList">Create New to-do List</button>
+            <div class="todo-lists">
+                <h2>Here's your to-do lists</h2>
+            </div>
+        </div>
+
+        <div class="hide" id="todoList">
+            <div class="" id="newTodo">
+                <h2>Create new todo list</h2>
+                <form class="" id="formTodoList" method="post" action="">
+                    <div class="form-field">
+                        <input type="text" id="listName" name="listName" placeholder="To-do list name" />
+                        <button type="submit" class="btn">Add List</button>
+                        <button type="button" class="btn hide" name="cancel" id="btnCancel">Cancel</button>
+                        <p class="error"></p>
+                    </div>
+                </form>
+            </div>
+            <div class="" id="listItems">
+                <h2 class="list-title"></h2>
+                <button class="btn btn-small" id="btnEditTodoList">Edit</button>
+                <form class="" id="formTodo" method="post" action="">
+                    <div class="form-field">
+                        <input type="text" id="todo" name="todo" placeholder="New task"/>
+                        <button type="submit" class="btn">Add</button>
+                        <p class="error"></p>
+                    </div>
+                </form>
+                <ul class="todos"></ul>
+            </div>
+        </div>
+        
+        <div class="hide" id="account">
+                <h1>Account Settings</h1>
+                <form class="" id="formAccount" method="post" action="">       
+                        <div class="form-field">
+                            <label>First Name</label>
+                            <input type="text" id="accFname" name="fname" />
+                            <p class="error"></p>
+                        </div>
+                        <div class="form-field">
+                            <label>Last Name</label>
+                            <input type="text" id="accLname" name="lname" />
+                            <p class="error"></p>
+                        </div>
+                        <div class="form-field">
+                            <label>Email</label>
+                            <input type="text" id="accEmail" name="email" />
+                            <p class="error"></p>
+                        </div>
+                        <div class="form-field">
+                            <label>Password</label>
+                            <input type="password" id="accPassword" name="password" />
+                            <p class="error"></p>
+                        </div>
+                        <div class="form-field">
+                            <button type="submit" class="btn">Save</button>
+                        </div>
+                    </form>
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+html, body {
+    height: 100%;
+    font-size: 1rem;
+}
+
+div#index, div#login, div#signup , div#dashboard,
+div#settings, div#account, div#todoList {
+    padding: 10px;
+}
+
+div#index, div#login, div#signup  {    
+    margin: auto;
+    width: 40%;
+    background: #F2F3F4;
+}
+ 
+div#index {
+    text-align:center;
+}
+
+div#app {
+    margin: auto;
+    width: 80%;
+    background: #F2F3F4; 
+}
+
+div#settings {
+    float:right;
+}
+
+.hide {
+    display: none !important;
+}
+
+.show {
+    display: block;
+}
+
+.clearfix {
+    clear:both;
+}
+
+.response {
+    color: #fff;
+    padding: 12px 8px;
+  
+    margin-bottom: 5px;
+}
+
+.success {
+    background:  #27ae60;
+    border:1px solid #27AE60;
+}
+
+.fail {
+    background:  #EC7063;
+    border:1px solid #EC7063;
+}
+
+.error {
+    color: #ff0000;
+    margin: 0;
+}
+
+.form-field {
+    margin-bottom: 20px;    
+}
+
+.form-field input { 
+    padding:10px 20px;
+}
+
+label {
+    color: #333;
+}
+
+.form-field label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.form-field  .label-inline {
+    display: inline;
+}
+
+input[type="text"], input[type="password"] {
+    width:50%;
+}
+
+.btn {
+    background: #27AE60;
+    color: #fff;
+    cursor: pointer;
+    padding: 10px 12px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    border: 1px solid #27AE60;
+    font-weight: 600;
+}
+
+.btn-red {
+    background: #EC7063;
+    border-color: #EC7063;
+}
+
+.btn-small {
+    padding: 2px 5px;
+    font-size: 0.8rem;
+    margin: 20px;
+}
+
+.list-title {
+    display: inline-block;
+}
+
+ul li {
+    list-style: none;
+    padding: 5px 8px;
+}
+
+ul.todos li label {
+    font-size: 1.2rem;
+}
+
+.todo-lists {
+    position: relative;
+    font-size: 1.8rem;
+}
+
+.todo-lists ul li {
+    color: #fff;
+    background: #1b9eea;
+    border-bottom: 1px solid #1b9eea;
+    margin-bottom:5px;
+    padding: 10px 20px;
+    width: 50%;
+    word-wrap: break-word;
+}
+
+.todo-lists ul li:hover {
+    cursor: pointer;
+}
+
+.strikeout {
+    text-decoration: line-through;
+}
+
+.status {
+    color: #27AE60;
+    font-weight: bold;
+    margin-left:5px;    
+}
