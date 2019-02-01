@@ -245,7 +245,7 @@ function signup(e) {
     function submitForm() {
         if(elFname.value !== "" && elLname.value !== "" && elEmail.value !== "" && elPassword.value !== "" && elTerms.checked) {
             const  user = getUser(elEmail.value);
-            const encPassword = encrypt(user.password);
+            const encPassword = encrypt(elPassword.value);
            
             if (user === null) {
                 const newUser = new User(elFname.value, elLname.value, elEmail.value, encPassword);
@@ -669,7 +669,7 @@ function updateUserAccount(e) {
     //Form submission.
     function submitForm() {
         if(elFname.value !== "" && elLname.value !== "" && elEmail.value !== "" && elPassword.value !== "") {
-              
+            
             let oldPassword = decrypt(currentUser.password);
             //Check password changed or not.
             if(elPassword.value !== oldPassword) {
