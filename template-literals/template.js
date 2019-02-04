@@ -3,21 +3,22 @@
  *  Description:  Upgrade project #1 code to with template literals.
  */
 
+//Head of the HTML.
 const css = "app.css";
 const title = "To-do Application";
 
 const headContents = (
     `<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>${title}</title>
-    <link rel="stylesheet" type="text/css" href="${css}">`);
+     <meta name="viewport" content="width=device-width">
+     <title>${title}</title>
+     <link rel="stylesheet" type="text/css" href="${css}">`);
 
 document.head.innerHTML = headContents;
 
 //Index template.
 const indexTitle = "To-do";
 const indexDescription = "The easiest way to get stuff done, every day.";
-const divIds = ["index", "signup", "login","settings",  "dashboard", "todoList", "account"];
+const divIds = ["index", "signup", "login", "settings",  "dashboard", "todoList", "account"];
 const indexButtons = [
     { id:"btnSignup", class:"signup", label: "Sign Up" },
     { id:"btnLogin", class:"login", label: "Log In"},];
@@ -45,9 +46,9 @@ const signupDIV = (
         <form class="" id="formSignup" method="post" action="">    
             ${signupForm.map((field) => 
                 `<div class = "form-field">
-                    ${(field.type !== "checkbox")? `<label>${field.label}</label>`:""}
+                    ${(field.type !== "checkbox")? `<label>${field.label}</label>` : ""}
                     <input type="${field.type}" name="${field.name}" id="${field.id}" />
-                    ${(field.type === "checkbox") ? `<label class="label-inline">${field.label}</label>`:""}
+                    ${(field.type === "checkbox") ? `<label class="label-inline">${field.label}</label>` : ""}
                     <p class="error"></p>
                 </div>`).join("")} 
                 <div class = "form-field">
@@ -84,14 +85,14 @@ const loginDIV  = (
 const settingsButtons = [
         {id: "btnDashboard", text: "Dashboard", class:""},
         {id: "btnAccountSettings", text: "Account Settings", class:""},
-        {id: "btnLogout", text: "Logout", class:"btn-red"}
+        {id: "btnLogout", text: "Logout", class:"btn-red"},
     ];  
 
 const settingsDIV = (
     `<div class="hide" id="${divIds[3]}">
         <p></p>
-        ${settingsButtons.map((btn)=> 
-            `<button class="btn ${ btn.text === 'Logout' ? btn.class:""}" id="${btn.id}">${btn.text}</button>` ).join(" ")}
+        ${settingsButtons.map((btn) => 
+            `<button class="btn ${ btn.text === 'Logout' ? btn.class : ""}" id="${btn.id}">${btn.text}</button>` ).join(" ")}
     </div>
     <div class="clearfix"></div>`);
 
@@ -104,21 +105,21 @@ const dashboardDIV = (
         <p class="new-todo">Start creating your first to-do list</p>
         <button type="button" class="btn" id="btnNewTodoList">Create New to-do List</button>
         <div class="todo-lists">
-            <h2>${ todoListTitle}</h2>
+            <h2>${todoListTitle}</h2>
         </div>
     </div>`);
 
 //App todolist template.
 const newTodoListTitle = "Create new todo list";
 const todoListForm = [
-    { id:"listName", type:"text", name:"listName", placeholder: "To-do list name"} ,];
+    { id:"listName", type:"text", name:"listName", placeholder: "To-do list name"},];
 
 const todoListButtons = [
-    { id:"btnTodoListSubmit", type: "submit", name:"todoListSubmit", class:"",label: "Add List"},
+    { id:"btnTodoListSubmit", type: "submit", name:"todoListSubmit", class:"", label: "Add List"},
     { id:"btnCancel", type: "button", name:"cancel", class:"hide", label: "Cancel"}, ];
 
 const todoForm = [
-    { id:"todo", type:"text", name:"todo", placeholder: "New task"} ,];
+    { id:"todo", type:"text", name:"todo", placeholder: "New task"}, ];
 
 const todoListDIV = (
     `<div class="hide" id="${divIds[5]}">
@@ -156,7 +157,7 @@ const accountForm = [
             { id:"accFname",  type:"text", name:"fname", label:"First Name" },
             { id:"accLname",  type:"text", name:"lname", label: "Last Name" },
             { id:"accEmail",  type:"text", name:"email", label: "Email" },
-            { id:"accPassword",  type:"password", name:"password", label: "password" },];
+            { id:"accPassword",  type:"password", name:"password", label: "Password" },];
 
 const accountDIV = (
     `<div class="hide" id="${divIds[6]}">
@@ -166,12 +167,12 @@ const accountDIV = (
             `<div class="form-field">
                 <label>${field.label}</label>
                 <input type= "${field.type}" name = "${field.name}" id= "${field.id}" />
-                ${(field.type === "checkbox") ? `<label class = "label-inline">${field.label}</label>`:""}
+                ${(field.type === "checkbox") ? `<label class = "label-inline">${field.label}</label>` : ""}
                 <p class="error"></p>
-            </div>`).join("")}
-            <div class="form-field">
+             </div>`).join("")}
+             <div class="form-field">
                 <button type="submit" class="btn">Save</button>
-            </div>
+             </div>
         </form>
     </div>`);  
 

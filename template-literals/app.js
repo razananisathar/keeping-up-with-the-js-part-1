@@ -590,12 +590,12 @@ function checkTodo(e) {
         elSPAN.classList.add("status");
         elSPAN.innerText = "Done";
         e.target.nextSibling.classList.add("strikeout");
-        e.target.setAttribute("checked",true);
+        e.target.setAttribute("checked", true);
     } else {
         //Uncheck todo.
         currentUser.lists[idxList].tasks[idxTask].done = false;
         e.target.nextSibling.classList.remove("strikeout");
-        e.target.parentNode.lastChild.remove();
+        e.target.parentNode.lastChild.innerHTML= "";
         e.target.setAttribute("checked", false);
     }
     save();
