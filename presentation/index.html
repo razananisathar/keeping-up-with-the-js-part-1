@@ -1,0 +1,465 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Vue JavaScript Framework</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+		<style type="text/css">
+			body {
+				background: #8E44AD !important;
+				background-color: #8E44AD !important; 
+			}
+		</style>
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-markdown>
+					<textarea data-template>
+						![vue-logo](./images/logo.png)
+						## Introduction to Vue Javascript framework
+						---	
+						*Fathima Razana Nisathar*
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Background
+						- Vue created by Evan You.
+						- It was built by picking the best ideas of frameworks like Angular, React and Knockout.
+						- Originally released in February 2014 and the current version is 2.6.
+						- Open source and lightweight Javascript framework.
+						- Vue.js project is accessible at [https://vuejs.org/](https://vuejs.org/).
+					</textarea>
+				</section>	
+				<section data-markdown>
+					<textarea data-template>
+						## Why Choose Vue?
+						- It is simple, tiny and very performant.
+						- Vue is a progressive Javascript framework for building user interfaces.
+						- Helps to create more maintainable and testable codebase.
+						- It has a virtual DOM and composable, reactive components.
+						- Easy to learn.
+					</textarea>
+				</section>	
+				<section data-markdown>
+					<textarea data-template>
+						## Ways to load Vue
+						- CDN
+						```html 
+						<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js">
+						</script>
+						```
+						
+						- Direct
+							:Simply download and include with a `<script></script>` tag.
+							([Download](https://vuejs.org/v2/guide/installation.html))
+							
+						- CLI 
+							:Quickly scaffold a Single Page Applications (SPA).
+							([vue-cli](https://github.com/vuejs/vue-cli))
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## How It Works
+						-  Create an HTML file which contains: 
+						```html
+							<html>
+							<head>
+								<title>First Vue</title>
+							</head>
+							<body>
+							<div id="app">
+								<h2>{{ product }} are in stock.</h2>
+							</div>
+							<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+							<script>
+								const app = new Vue({
+									el: '#app',
+									data: {
+										product: 'Breads'
+									}
+								})
+							</script>
+							</body>
+							</html>```
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						- Then open it in the browser. 
+						![first](./images/first.JPG)
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## What did that do?
+						- First it creates a Vue instance that's linked to the #app element.
+						- Then, it associates that template to the data object. 
+						- Data object is a special object that hosts the data we want Vue to render.
+						- In the template, the special {{ }} tag indicates that this is some part of the template.
+						- Content inside {{ }} are dynamic, and its content should be looked up in the Vue app data.
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Key Features
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Reactive 
+						- The data and DOM are now linked and everything now **reactive**.
+						- Open your browser’s JavaScript console on the vue app page.
+						- Set _app.product_ to a different value. 
+ 					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						![second](./images/second.JPG)
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Vue Directives 
+						- Directives are like HTML attributes.
+						- They are special attributes with the **v-** prefix to indicate Vue special attribute.
+						- Added inside template.
+						```html
+							<span v-text="product"></span>
+						```
+						- Commonly used directives are often have shorthands.
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						- _v-text_ 
+						:is similar to string interpolation.
+						```html
+							<span v-text="product"></span>
+							<!--same as -->
+							<span>{{product}}</span>
+						```
+						- _v-once_ 
+						:render the element and component once only.
+						```html
+							<div v-once>
+								<p>{{product}}</p>
+							</div>
+						```
+						- _v-bind_
+						:dynamically bind one or more attributes.
+						```html 
+						<a v-bind:href="url">{{ linkText }}</a>
+						```
+						- _v-html_
+						:updates the elements innerHTML.
+						```html 
+							<div v-html="html"></div>
+						```
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Directives Shorthands 
+						-  _v-on:eventName_ can be represented with _@eventName_.
+						```html
+						<div id="app">
+							<!-- full syntax -->
+							<button v-on:click="alert">Click Me!</button>
+							
+							<!-- shorthand -->
+							<button @click="alert">Click Me!</button>
+							
+							<!-- shorthand with dynamic argument (2.6.0+) -->
+							<button @[click]="alert">Click Me!</button>
+						</div>
+						```
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						- _v-bind:propertyName_ can be represented with _:propertyName_.
+						```html
+						<div id="app">
+							<!-- full syntax -->
+							<a v-bind:href="url">{{ linkText }}</a>
+							
+							<!-- shorthand -->
+							<a :href="url">{{ linkText }}</a>
+							
+							<!-- shorthand with dynamic argument (2.6.0+) -->
+							<button @[href]="url">{{ linkText }}</button>
+						</div>
+						```
+					</textarea>
+				</section>
+				<section data-markdown>
+						<textarea data-template>
+							## Conditionals
+							- _v-if_, _v-else_ and _v-else-if_ directives are used to render a conditional block.
+							```html
+							<div v-if="Math.random() > 0.5">
+								Now you see me
+								</div>
+								<div v-else>
+								Now you don't
+							</div>
+							```
+						</textarea>
+					</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Loops
+						- _v-for_ allows you to render a list of items. 
+						- Use it in combination with v-bind to set the properties of each item in the list.
+						```html
+							<div id="app">
+								<ul>
+									<li v-for="item in items">{{ item }}</li>
+								</ul>
+							</div>
+						```
+						```html	
+							<script>
+								const app = new Vue({
+									el: '#app',
+									data: {
+										items: ['Cake', 'Doughnuts', 'Cookies', 'Chocolates', 'Eclairs']
+									}
+								})
+							</script>
+						```
+					</textarea>
+					</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Data Binding with v-model
+						- _v-model_ directive makes two-way binding between form input and app.
+						```html
+							<div id="app">
+								<p>Message is: {{ message }}</p>
+								<input type ="text" v-model="message" placeholder="Type something here">
+							</div>
+						```
+						```html
+							<script>
+								const app = new Vue({
+									el: '#app',
+									data: {
+										message: ''
+									}
+								})
+							</script>
+						```
+					</textarea>
+				</section>
+				<section data-markdown>
+						<textarea data-template>
+							## v-model in Action
+							- When user changes the input field Vue dynamically updates the {{message}}.
+								![third](./images/third.JPG)
+						</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Methods 
+						- A Vue method is a function associated with the Vue instance.
+						- Methods are defined inside the _methods_ property.
+						- Methods can accept parameters.
+						- Can access any of the data properties of the Vue component by using _this.propertyName_.
+						- Especially useful when you need to perform an action and you attach a _v-on_ directive on an element to handle events. 
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Use of Methods 
+						```html
+						<div id="app">
+							<p>Button clicked {{ clicks }} times.</p>
+							<button @click="count">Click Me!</button>
+						</div>
+						```
+						```html
+						<script>
+							const app = new Vue({
+								el: '#app',
+								data: {
+									clicks: 0
+								},
+								methods: {
+									count(event) {
+										return this.clicks += 1;
+									}
+								}
+							})
+						</script>```
+					</textarea>
+				</section>
+				<section data-markdown>
+						<textarea data-template>
+							## Events
+							- Use _v-on_ directive to listen to DOM events.
+							```html
+							<div id="app">
+								<button v-on:click="alert">Click Me!</button>
+							</div>
+							```
+							```html
+							<script>
+								const app = new Vue({
+									el: '#app',
+									methods: {
+										alert(event) {
+											console.log(event);
+											alert("Clicked!");
+										}
+									}
+								})
+							</script>```
+						</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Computed Properties 
+						- Doing complex logics inside template is a bad idea.
+						```html
+							<div id="app">
+								{{ message.split('').reverse().join('') }}
+							</div>
+						```
+						- Vue computed proerties do something more than a single expression.
+						- It allows to have more declarative templates.
+						- Computed properties are defined in the _computed_ property of the Vue component.
+					</textarea>
+				</section>
+				<section data-markdown>
+						<textarea data-template>
+							## Use of computed properties
+							```html
+							<div id="app">
+								<ul>
+									<li v-for ="item in reverseArray">{{item}}</li>
+								</ul>
+							</div>
+							```
+							```html
+							<script>
+								const app = new Vue({
+									el: '#app',
+									data: {
+										items: ['Cake', 'Doughnuts', 'Cookies', 'Chocolates', 'Eclairs']
+									},
+									computed: {
+										reverseArray: function() {
+											return this.items.slice().reverse();
+										}
+									}
+								})
+							</script>```
+						</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## What's the Difference Between Computed Properties and Methods? 
+						- Methods must be called, not just referenced.
+						- Computed properties are cached based on their dependencies.
+						- Computed properties are only updated when a reactive source updates. 
+						- Regular JavaScript methods are not reactive.
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Filters
+						- Filters are a functionality provided by Vue components.
+						- Allows formatting and transformations to any part of your template dynamic data.
+						- They don’t change a component’s data or anything, but they only affect the output.
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Use of Filters
+						```html
+						<div id="app">
+							<p>Message is: {{ message | capitalize }}</p>
+						</div>
+						```
+						
+						```html
+						<script>
+							const app = new Vue({
+								el: '#app',
+								data: {
+									message: 'hello world'
+								},
+								filters: {
+									capitalize(string) {
+										return string.toUpperCase();
+											
+									}
+								}
+							})
+						</script>```
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Vue Components
+						- Components are reusable Vue instances with a name.
+						- Components data must be a function instead of an object, so that each instance can maintain an independent copy of the returned data object.
+						```
+						<script>
+							Vue.component('button-counter', {
+							data: function () {
+							  return {
+								count: 0
+							  }
+							},
+							template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+						  })
+						</script>
+						```
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Thank You.
+					</textarea>
+				</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
