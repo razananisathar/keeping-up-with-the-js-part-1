@@ -43,7 +43,7 @@ class Cars extends Vehicle {
 class Planes extends Vehicle {
     constructor(make, model, year, weight) {
         super(make, model, year, weight);
-        this.isFyling = false;
+        this.isFlying = false;
     }
 
     fly() {
@@ -51,7 +51,7 @@ class Planes extends Vehicle {
             if (this.needsMaintenance) {
                 throw "Plane can't fly until it's repaired.";
             }else {
-                this.isFyling = true;
+                this.isFlying = true;
             }
 
         } catch(e) {
@@ -60,7 +60,7 @@ class Planes extends Vehicle {
     }
 
     land() {
-        this.isFyling = false;
+        this.isFlying = false;
         this.tripsSinceMaintenance += 1;
         
         if(this.tripsSinceMaintenance > 100) {
@@ -75,6 +75,7 @@ const car01 = new Cars("Volkswagen", "Atlas", "2018", 2670);
 const car02 = new Cars("BMW 3 Series", "320d Prestige", "2016", 3494);
 const car03 = new Cars("Toyota", "Hybrid XLE", "2019", 3572);
 
+// Object car01 specs.
 console.log(`%c${car01.make} ${car01.model} Specifications`,  `color:blue; font-weight:bold;`);
 
 for(let i = 0; i <= 120; i++) {
@@ -95,7 +96,9 @@ if(car01.needsMaintenance) {
     console.log(`Number of trips since maintenance? ${car01.tripsSinceMaintenance}`);
 }
 
+// Object car02 specs.
 console.log(`%c${car02.make} ${car02.model} Specifications`, `color:blue; font-weight:bold;`);
+
 car02.drive();
 car02.stop();
 
@@ -112,7 +115,9 @@ if(car02.needsMaintenance) {
     console.log(`Number of trips since maintenance? ${car02.tripsSinceMaintenance}`);
 }
 
+// Object car03 specs.
 console.log(`%c${car03.make} ${car03.model} Specifications`, `color:blue; font-weight:bold;`);
+
 car03.drive();
 car03.stop();
 
@@ -132,6 +137,7 @@ if(car03.needsMaintenance) {
 // Plane Object
 const plane01 = new Planes("Boeing", "787-9 Dreamliner", "2013", 54500);
 
+// Object plane01 specs.
 console.log(`%c${plane01.make} ${plane01.model} Specifications`,  `color:blue; font-weight:bold;`);
 
 console.log(`Make of the plane: ${plane01.make}`);
