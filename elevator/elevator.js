@@ -43,8 +43,16 @@ class Elevator {
     addNewDestination(destination) {
         try {
             if (this.testElevatorBoundries(destination)) {
-                this.destinationFloors.push(destination);
-                this.setStatus();
+                // Omit already existing request to same floor.
+                let idx  = this.destinationFloors.findIndex((el)=> {
+                     return el === destination;
+                 });
+               
+                if(idx === -1) {
+                    this.destinationFloors.push(destination);
+                    this.setStatus();
+                }
+                
             } else {
                 throw "Elevator " + this.label + " doesn\'t move to floor " + destination;
             }
@@ -70,7 +78,7 @@ class Elevator {
     /** 
      * Validate the elevator boundaries.
      * @param {number} floor - The floor number 
-     * @return {boolean} 
+     * @return {boolean} - validation result
      */
     testElevatorBoundries(floor) {
         return (this.minFloor <= floor && this.maxFloor >= floor);
@@ -105,6 +113,7 @@ class Elevator {
     /** 
      * Calculate the distance between the elevator and the floor which calling the elevator.
      * @param {number} destinationFloor - Destination floor number/Floor which calling the elevator
+     * @returns {number} - Distance
      */
     getDistance(destinationFloor) {
         let distance;
@@ -112,37 +121,23 @@ class Elevator {
         if(this.currentFloor === destinationFloor) {
             distance = 0;
         }else {
+            let last = this.destinationFloors[this.destinationFloors.length - 1];
+
             switch(this.direction) {
                 case Direction.UP:
                     if(this.currentFloor < destinationFloor) {
                         distance = destinationFloor - this.currentFloor;
-                    } else if(this.currentFloor > destinationFloor && this.isMoving && this.destinationFloors.length !== 0) {
-                        // Elevator moving up and the request comes from a floor lower to the current floor
-                        let lastFloor = this.destinationFloors.pop();
-                        if(lastFloor > this.currentFloor) {
-                            distance = (lastFloor - this.currentFloor) + (lastFloor - destinationFloor);
-                    } else if(lastFloor < this.currentFloor) {
-                            distance = (this.currentFloor - lastFloor) + (lastFloor - destinationFloor);
-                        }
-                    } else if(this.currentFloor > destinationFloor && !this.isMoving && this.destinationFloors.length === 0) {
-                        distance = this.currentFloor - destinationFloor;
-                        this.direction = Direction.DOWN;
+                    } else {
+                        // Elevator going up, request from down
+                        distance = (destinationFloor -this.currentFloor) + (last - destinationFloor);
                     }
                 break;
                 case Direction.DOWN:
                     if(this.currentFloor > destinationFloor) {
                         distance = this.currentFloor - destinationFloor;
-                    } else if(this.currentFloor < destinationFloor && this.isMoving && this.destinationFloors.length !== 0) {
-                        // Elevator moving down and the request comes from a floor upper to the current floor
-                            let lastFloor = this.destinationFloors.pop();
-                            if(lastFloor < this.currentFloor) {
-                                distance = (this.currentFloor - lastFloor) + Math.abs((destinationFloor - lastFloor));
-                            } else if(lastFloor > this.currentFloor) {
-                                distance = (lastFloor - this.currentFloor) + Math.abs((destinationFloor  - lastFloor));
-                            }
-                    } else if(this.currentFloor < destinationFloor && !this.isMoving && this.destinationFloors.length === 0) {
-                        distance = destinationFloor - this.currentFloor;
-                        this.direction = Direction.UP;
+                    } else {
+                        // Elevator going down, request from up
+                        distance = (this.currentFloor - last) + (destinationFloor - last);
                     }
                 break;
             }
@@ -200,7 +195,9 @@ class Elevator {
     }
 
     /** 
-     * Elevator arrives at the destination floor, then remove the destination from the queue.
+     * Elevator arrives at the destination floor.
+     * Remove destination from the queue. 
+     * @returns {array} - The destination queue 
      */
     removeDestionation() {
         return this.destinationFloors.shift();
@@ -208,15 +205,17 @@ class Elevator {
     
     /** 
      * Get the next destination floor in the queue. 
+     * @returns {number} - The next destination 
      */
     getNextDestionation() {
-        return this.destinationFloors[0];  
+        return this.destinationFloors[0];
     }
 
     /** 
      * The elevator moves up and down until it has no pending destination requests. 
      */
     run() {
+        
         if(!this.isMoving && this.destinationFloors.length == 0) {
             return;
         }
@@ -303,22 +302,43 @@ class ElevatorController {
 
     /** 
      * Add a new elevator object to the array of elevators.
+     * @param {object} - The elevator object
      */
     addElevator(elevator) {
         this.elevators.push(elevator);
     }
 
     /** 
-     * Returns array of elevators.
+     * @returns {array} - The array of elevators
      */
     getElevators() {
         return this.elevators;
     }
 
     /** 
+     * @returns {array} - The array of floors
+     */
+    getFloors() {
+        return this.floors;
+    }
+
+    /** 
+     * Find the elevator which matching the given elevator label.
+     * @param {string} - The elevator label
+     * @returns {object} - elevator
+     */
+    getElevatorByLabel(label) {
+        const elevator = this.elevators.find((el) => {
+            return el.label === label;
+        });
+
+        return elevator;
+    }
+    /** 
      * Find the nearest elevator to serve the calling request.
      * The floor buttons up/down calling invoke this method. 
      * @param {number} floor - The floor number which requests the elevator 
+     * @returns {object} - The nearest elevator object
      */
     pickUp(floor) {
         let elevators = this.getElevators();
@@ -341,29 +361,20 @@ class ElevatorController {
 
         if(distanceA !== 0 && distanceB !== 0) {
             if(distanceA <= distanceB) {
-                nearestElevator = elevators.find((item) => {
-                    return item.label === "A";
-                });
+                nearestElevator = this.getElevatorByLabel("A");
             } else {
-                nearestElevator = elevators.find((item) => {
-                    return item.label === "B";
-                });
+                nearestElevator = this.getElevatorByLabel("B");
             }
-            nearestElevator.addNewDestination(floor);
         
         } else if(distanceB !== 0 && distanceA === 0) {
-            nearestElevator = elevators.find((item) => {
-                return item.label === "B";
-            });
-            nearestElevator.addNewDestination(floor);
-        
+            nearestElevator = this.getElevatorByLabel("B");
+
         } else if(distanceA !== 0 && distanceB === 0) {
-            nearestElevator = elevators.find((item) => {
-                return item.label === "A";
-            });
-            nearestElevator.addNewDestination(floor);
-        
+            nearestElevator = this.getElevatorByLabel("A");
         }
+
+        nearestElevator.addNewDestination(floor);
+        return nearestElevator;
     }
 
     /** 
@@ -402,49 +413,8 @@ class ElevatorController {
      */
     operate() {
         this.elevators.forEach((elevator) => {
-            this.getFloorRequests(elevator);
             elevator.run();
         });
-    }
-
-     /** 
-     * Request the elevator to travel to random floors.
-     * @param {object} elevator - The elevator
-     */
-    getFloorRequests(elevator) {
-        const maxQueries = 20; // Assume maximum 20 passengers per elevator.
-
-        switch(elevator.label) {
-            case "A":
-            console.log(elevator.destinationFloors.length);
-                if(elevator.destinationFloors.length <= 30) {
-                    let floor = this.floors[Math.floor(Math.random() * this.floors.length)];
-                    this.goToFloor(elevator, floor);
-                } else console.log("No space");
-            break;
-            case "B":
-            console.log(elevator.destinationFloors.length);
-                if(elevator.destinationFloors.length <= 30) {
-                    let floor = this.floors[Math.floor(Math.random() * this.floors.length)];
-                    this.goToFloor(elevator, floor);
-                } else console.log("No space");
-            break;
-        }
-    }
-
-     /** 
-     * Fetch passenger requests from different floors and travel to random floors. 
-     * @param {object} elevator - The elevator
-     */
-    getPassengerRequests() {
-            for(let i = 0; i < this.floors.length; i++) {
-                let passengers = Math.floor(((Math.random()*100) + 1) % this.floors.length);
-                
-                for(let j = 0; j < passengers; j++) {
-                    let floor = this.floors[Math.floor(Math.random() * this.floors.length)];
-                    this.pickUp(floor);
-                }
-            } 
     }
 
     /** 
@@ -480,4 +450,36 @@ setTimeout(() => {
     console.log("Elevator controller stopped.");
 }, 180000);
 
-elevatorController.getPassengerRequests();
+/*-----------Test Cases---------------------*/
+// elevatorController.pickUp(10);
+// elevatorController.pickUp(-1);
+// elevatorController.goToFloor(elevatorA, 3); 
+// elevatorController.pickUp(9);
+// elevatorController.goToFloor(elevatorB, 3); 
+// elevatorController.goToFloor(elevatorB, 1); 
+// elevatorController.goToFloor(elevatorA, 8);
+// elevatorController.pickUp(3);
+// elevatorController.goToFloor(elevatorB, 4);
+// elevatorController.goToFloor(elevatorA, 8);
+// elevatorController.goToFloor(elevatorB, 9);      
+
+ridePassengers = () => {
+   const floors = elevatorController.getFloors();
+
+        // Random number of passangers
+        let passengerRequests = Math.floor(((Math.random()*100) + 1) % floors.length);
+
+            for(let j = 0; j <= passengerRequests; j++) {
+                //Random floor request
+                let floor = floors[Math.floor(Math.random() * floors.length)];
+                
+                let el = elevatorController.pickUp(floor);
+                
+                // Travelling to random floor
+                floor = floors[Math.floor(Math.random() * floors.length)];
+                elevatorController.goToFloor(el, floor); 
+
+            }
+}
+
+ridePassengers();

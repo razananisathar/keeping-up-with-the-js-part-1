@@ -40,7 +40,7 @@ A simple JavaScript program to control a set of elevators in a new building. Thi
 ### Notes
 - Replace the destination queue with a better data structure. Use of another array to handle request callbacks.
 - Calling the emergency line while the elevator is running and reset the emergency exit.
-- Code improvement for calculation of the distance between the elevator and the calling floor. 
+- Code improvement for calculating the distance between the elevator and the calling floor. 
 - Testing the algorithm for various usecases.
 - Code performance optimization.
 - Optimize the script to support 100 passenger requests in different intervals.
