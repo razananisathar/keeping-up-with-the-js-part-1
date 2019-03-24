@@ -1,0 +1,45 @@
+<html>
+<head>
+    <title>Fetch API</title>
+    <style type="text/css">
+        .btn {
+            background: #1b9eea;
+            color: #fff;
+            cursor: pointer;
+            padding: 10px 12px;
+            border-radius: 2px;
+            border: 1px solid #1b9eea;
+            font-weight: 600;
+        }
+
+        .pirple-courses {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .pirple-courses > div.course {
+            width: 500px;
+            margin: 30px;
+            padding: 20px;
+        }
+
+        .show {
+            display: block;
+        }
+
+        .hide {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <button class="btn" id ="fetch">Fetch Data</button>
+    <button class="btn" id="refresh">Refresh Data</button>
+
+    <p id="message" class="show"></p>
+    <div id="courses" class="pirple-courses">
+    </div>
+
+    <script src="playlist.js"></script>
+</body>
+</html>
