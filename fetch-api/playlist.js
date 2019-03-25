@@ -22,6 +22,7 @@ const fetchBTN = document.getElementById("fetch");
 const refreshBTN = document.getElementById("refresh");
 const coursesDIV = document.getElementById("courses");
 const messagePARA = document.getElementById("message");
+const titleH1 = document.getElementById("title");
 
 let isLoading = false;
 
@@ -29,6 +30,18 @@ let isLoading = false;
 const showMessage = (message) => {
     messagePARA.innerText = message;
 }
+
+// Display page title.
+const showTitle = (title) => {
+    document.title = title;
+    titleH1.classList.remove("hide");
+    titleH1.innerText = title;
+};
+
+// Disable fetch button after first submit.
+const disableFetchButton = () => {
+    fetchBTN.setAttribute("disabled","disabled");
+};
 
 // Request API to fetch data.
 const fetchPlaylists = () => {
@@ -46,6 +59,7 @@ const fetchPlaylists = () => {
                 isLoading = false;
                 populatePlaylist(playlist.items);
                 showMessage("");
+                disableFetchButton();
             })
             .catch((err) => {
                 console.log(err.message);
@@ -58,6 +72,8 @@ const fetchPlaylists = () => {
 // Display fetched data.
 const populatePlaylist = (videos) => {
         videos.reverse();
+
+        showTitle("Pirple Courses");
 
         for(video of videos) {
             showPlaylist(video.snippet);
@@ -84,6 +100,7 @@ const showPlaylist = ({position, publishedAt, title, description, resourceId:{vi
 
 // Call when refresh button clicked.
 const reload = () => {
+    titleH1.classList.add("hide");
     const courseDIVs = document.querySelectorAll(".course");
     
     if(courseDIVs.length !== 0) {
@@ -93,7 +110,7 @@ const reload = () => {
 
         fetchPlaylists();
     } else {
-        showMessage("First you have to fetch data.");
+        showMessage("First, you have to fetch data.");
     }
 };
  

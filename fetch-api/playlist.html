@@ -11,6 +11,10 @@
             border: 1px solid #1b9eea;
             font-weight: 600;
         }
+        
+        .btn:first-child, .status {
+            margin-left: 50px;
+        }
 
         .pirple-courses {
             display: flex;
@@ -22,13 +26,17 @@
             margin: 30px;
             padding: 20px;
         }
-
-        .show {
-            display: block;
+        
+        h1 {
+            text-align: center;
         }
 
+        h2 {
+            height: 100px;
+        }
+        
         .hide {
-            display: none;
+            display :none;
         }
     </style>
 </head>
@@ -36,7 +44,8 @@
     <button class="btn" id ="fetch">Fetch Data</button>
     <button class="btn" id="refresh">Refresh Data</button>
 
-    <p id="message" class="show"></p>
+    <h1 id="title" class=""></h1>
+    <p id="message" class="status"></p>
     <div id="courses" class="pirple-courses">
     </div>
 
