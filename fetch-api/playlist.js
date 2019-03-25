@@ -5,7 +5,7 @@
  *  Youtube Channel: Pirple, https://www.youtube.com/channel/UCwwFaFyKAol7hXS87fv30xg
  */
 
-const APIKEY = "AIzaSyCgxBy_0-N3ihNmoBb0oA0a1xMyBma-9_Q";
+const APIKEY = "YOUR_API_KEY_HERE";  // Add API Key here.
 const APIURL = "https://www.googleapis.com/youtube/v3/";
 
 /**
