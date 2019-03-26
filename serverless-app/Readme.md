@@ -1,3 +1,3 @@
 Screenshot of the squarer cloud function invoke.
 
-![GCF-screenshot](screenshot-gcf.png)
+![GCFscreenshot](screenshot-gcf.png)
