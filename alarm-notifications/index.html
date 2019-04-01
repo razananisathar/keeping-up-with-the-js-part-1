@@ -1,0 +1,33 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Alarm Notifications</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="container" id="alarm">
+            <h1>Alarm</h1>
+            <p class="response" id="message"></p>
+            <form class="form-alarm"  id="frmAlarm" action="" method="post">
+                <div class="form-horizontal">
+                    <label>Date</label>
+                    <input type="date" id="date" name="date">
+                </div>
+                <div class="form-horizontal">
+                    <label>Time</label>
+                    <input type="time" id="time" name="time" >
+                </div>
+                <div> 
+                    <button type="button" class="btn btn-submit" id="submit">Set Alarm</button>
+                </div>
+            </form>
+        </div>
+        <div class="container" id="alarms">
+        </div>
+    </div>
+
+    <script type="text/javascript" src="notifications.js"></script>
+</body>
+</html>
