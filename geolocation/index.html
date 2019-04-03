@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Geolocation API and Google Maps</title>
+        <style type="text/css">
+            html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                font-size: 1.1rem;
+            }
+
+            .response {
+                padding: 12px 8px;
+                margin-bottom: 5px;
+            }
+
+            .error {
+                background: #EC7063;
+                border: 1px solid #EC7063;
+                color: #fff;
+            }
+
+            .wrapper {
+                margin: auto;
+                width: 80%;
+            }
+
+            .btn {  
+                color: #fff;
+                cursor: pointer;
+                padding: 10px 12px;
+                border-radius: 2px;
+                font-weight: 600;
+                background: #1b9eea;
+                border: 1px solid #1b9eea;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+            <h1>Find The Nearest Library</h1>
+            <button id="btnLocation" class="btn">Get Direction</button>
+            <p class="response" id="message"></p>
+            <div class="" id="location">
+            </div>
+        </div>
+        <script src="geolocation.js"></script>
+    </body>
+</html>
