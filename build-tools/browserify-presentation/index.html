@@ -1,0 +1,305 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Browserify</title>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+		<style type="text/css">
+			body {
+				background: #144758 !important;
+				background-color: #144758 !important; 
+			}
+		</style>
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/monokai.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-markdown>
+					<textarea data-template>
+						![browserify-logo](./images/logo.png)
+						## Getting Started with Browserify
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## What Is Browserify?
+						- <span style="color:yellow !important">[browserify.org](http://browserify.org/)</span> is a build tool for web.
+						- Bundles all your modules into a single file for use in the browser.
+						- Allow developers to write Node.js-style modules.
+						- Uses NodeJS <span style="color:yellow">*require*</span> syntax to import JavaScript. 
+						- It brings all the resources of the NPM ecosystem off of the server, and into the client.
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## How It Works?
+						- Install NodeJS and NPM. Then do; 
+							```bash
+								npm install browserify
+							```
+							<br>
+						- To install system-wide use -g before browserify.  
+							```bash
+								npm install -g browserify
+							```
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						Two script files. 
+						<br>
+						<span style="color:yellow">squarer.js</span>
+						```javascript
+							module.exports = (arr) => {
+								return arr.map(n => Math.pow(n, 2));
+							};
+						```
+						<span style="color:yellow">main.js</span>
+						```javascript
+							const squarer = require("./squarer.js")
+							
+							const arr = [11, 12, 13, 14, 15];
+							console.log(squarer(arr)); 
+						```
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						- Let's bundle using browserify.
+						```bash
+							browserify main.js -o bundle.js
+						```
+						<br>
+						- Include <span style="color:yellow">*bundle.js*</span> in html file.
+						```html
+							<script src="bundle.js"></script>
+						```
+						<br>
+						DONE! 
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Behind The Scene?
+						- When you tell browserify to bundle up <span style="color:yellow">*main.js*</span>,  it scans all the files you require and, then includes source of those files into <span style="color:yellow">*bundle.js*</span>. 
+						- Here, <span style="color:yellow">*main.js*</span> serves as its entry point, includes the source of every dependency it finds. 
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						Let's see <span style="color:yellow">*bundle.js*</span>.
+						<br>
+						```javascript
+						(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+							const squarer = require("./squarer.js")
+							
+							const arr = [11, 12, 13, 14, 15];
+							
+							console.log(squarer(arr)); 
+							},{"./squarer.js":2}],2:[function(require,module,exports){
+							module.exports = (arr) => {
+								return arr.map(n => Math.pow(n, 2));
+							};
+							},{}]},{},[1]);							
+						```
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Browserify Transforms
+						- Transforms lets you transform source code before parsing it for <span style="color:yellow">require()</span>.
+						- It can be transpiling ES6 to vanilla JavaScript or even transform for bundling, rebasing, inlining, and minifying CSS files.
+						- Visit [Browserify Transforms](https://github.com/browserify/browserify/wiki/list-of-transforms).
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Babel Browserify Transform
+						- [Babelify](https://github.com/babel/babelify) transpile ES6 to vanilla JavaScript.
+						```bash
+							npm install --save-dev babelify @babel/core
+						```
+						- Presets and plugins need to be installed as separate modules. 
+						- Install @babel/preset-env and @babel/preset-react:
+						```bash
+							npm install --save-dev @babel/preset-env @babel/preset-react
+						```
+						- Using CLI: 
+							```bash
+								browserify main.js -o bundle.js -t 
+								[ babelify --presets [ @babel/preset-env @babel/preset-react ]]
+							```
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						Let's review <span style="color:yellow">*bundle.js*</span>.
+						<br>
+						```javascript
+						(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+							"use strict";
+							
+							var squarer = require("./squarer.js");
+							
+							var arr = [11, 12, 13, 14, 15];
+							console.log(squarer(arr));
+							
+							},{"./squarer.js":2}],2:[function(require,module,exports){
+							"use strict";
+							
+							module.exports = function (arr) {
+								return arr.map(function (n) {
+								return Math.pow(n, 2);
+								});
+							};
+							
+							},{}]},{},[1]);
+						```
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Live Rebuild
+						- [Beefy](https://github.com/chrisdickinson/beefy) makes it easy to enable live reload alongside automatic rebuild.
+						- It does two things.
+							1. Run a local webserver to serve your files.
+							2. Start a process to watch your filesystem for changes to your source code.
+						
+						```bash
+							npm install --save-dev beefy
+						```
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						- Run live server;
+						```bash
+							beefy main.js --live
+						```
+						- Beefy start listening on http://127.0.0.1:9966. 
+						- The <span style="color:yellow">--live</span> switch tells Beefy to automatically rebuild your bundle and reload the browser whenever you change your source code.
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Building A Browserify Configuration
+						- Browserify is by far the simplest setup in comparison to SystemJs or Webpack. 
+						- Create <span style="color:yellow">package.json</span> file.
+						- Install all the dependencies.
+						- Configure npm build and serve.						
+					</textarea>
+				</section>
+				<section data-markdown>
+						<textarea data-template>
+							- Live server
+							```json
+								"serve": "beefy ./src/main.js --live"
+							```
+							Run the command
+							<span style="color:yellow">npm run serve</span>.
+							- Automate the build process. 
+							```json
+								"build": "browserify src/main.js -t 
+									[ babelify --presets [ @babel/preset-env @babel/preset-react ] ] > dist/bundle.js"
+							```
+							Run the command
+							<span style="color:yellow">npm run build</span>.
+						</textarea>
+					</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Setting Up With Gulp
+						- Install Gulp and create a gulp file. 
+						- Configue tasks.
+							- Spit out a bundle;
+							- Move source HTML to seperate folder;
+							- Transform ES2015 via Babelify;
+							- Produce separate source maps.
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						- <span style="color:yellow">gulpfile.js</span> 
+						```javascript
+							const gulp = require("gulp");
+							const babelify = require("babelify");
+							const browserify = require('browserify');
+							const buffer = require("vinyl-buffer");
+							const source = require('vinyl-source-stream');
+							const rename = require("gulp-rename");
+							const sourceMaps = require("gulp-sourcemaps");
+							const livereload = require("gulp-livereload");
+
+							const config = {
+									src: "./src/main.js",
+									outputDir: "./dist/",
+									mapsDir: "./maps/",
+									outputFile: "bundle.js",
+							};
+
+							gulp.task("moveHTML", function() {
+								return gulp.src("src/*.html")
+									.pipe(gulp.dest(config.outputDir));
+							});
+
+							gulp.task("js", () => {
+								return browserify(config.src)
+										.transform(babelify.configure({
+											presets: ["@babel/preset-env", "@babel/preset-react"]
+										}))
+										.bundle()
+										.pipe(source(config.src))
+										.pipe(buffer())
+										.pipe(rename(config.outputFile))    
+										.pipe(sourceMaps.init({ loadMaps : true })) 
+										.pipe(sourceMaps.write(config.mapsDir))  
+										.pipe(gulp.dest(config.outputDir))
+										.pipe(livereload());  
+							});
+
+							gulp.task('default', gulp.series("moveHTML","js"));
+							```
+						[Click here](https://github.com/razananisathar/keeping-up-with-the-js-part-1/tree/master/build-tools/browserify) for sample codes. 
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Thank You.							
+					</textarea>
+				</section>
+			</div>
+		</div>
+
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true }
+				]
+			});
+		</script>
+	</body>
+</html>

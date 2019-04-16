@@ -1,0 +1,239 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Grunt vs. Gulp</title>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+		<style type="text/css">
+			body {
+				background: #cf4647 !important;
+				background-color: #cf4647 !important; 
+			}
+		</style>
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/monokai.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-markdown>
+					<textarea data-template>
+						![grunt-vs-gulp](./images/grunt-vs-gulp.jpg)
+						## Grunt vs. Gulp
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## What Is Grunt?
+						- [Grunt](https://gruntjs.com) is a task-based command line build tool for JavaScript projects.
+						- Configuration over code.
+						- Every task in Grunt is an array of different plugin configurations.
+						- These configurations execute one after another, in a strictly independent, and sequential fashion.
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						- Install latest version of Grunt in your project folder as dev dependencies.
+							```bash 
+								npm install grunt --save-dev
+							```
+						- Grunt CLI allows to install multiple versions of Grunt on the same machine simultaneously.
+							```bash 
+								npm install -g grunt-cli
+							```
+						- Run the version of Grunt which has been installed next to a Gruntfile.
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## The Gruntfile
+						```javascript
+						// 1. Wrapper function - All of your Grunt code must be specified inside this function.
+						module.exports = (grunt) => {
+							// 2. Project Configuration - Grunt tasks rely on configuration data defined in an object passed to the grunt.initConfig method.
+							grunt.initConfig({
+								pkg: grunt.file.readJSON('package.json'),
+								browserify: {
+									dist: {
+										files: {
+											'build/<%= pkg.name %>.js': ['src/*.js']
+										},
+										options: {
+										//   transform: []
+										}
+									  }
+								},
+								babel: {
+									options: {
+										sourceMap: true,
+										presets: ['@babel/preset-env']
+									},
+									dist: {
+										files: {
+											'build/<%= pkg.name %>.js': 'build/<%= pkg.name %>.js'
+										  }
+									 }
+								},
+								uglify: {
+									options: {
+										sourceMap: true,
+										banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+									},
+									build: {
+										src: 'build/<%= pkg.name %>.js',
+										dest: 'build/<%= pkg.name %>.min.js'
+									},
+								},
+							});
+						
+							//3. Load the plugins.
+							grunt.loadNpmTasks('grunt-browserify');
+							grunt.loadNpmTasks('grunt-babel');
+							grunt.loadNpmTasks('grunt-contrib-uglify');
+						
+							// 4. Default task(s).
+							grunt.registerTask('default', ['browserify', 'babel', 'uglify']);
+						};
+						```
+						[Click here](https://github.com/razananisathar/keeping-up-with-the-js-part-1/tree/master/build-tools/grunt) for sample codes. 
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## How Grunt Works?
+						![grunt-process](./images/grunt-process.png)
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## What Is Gulp?
+						- [Gulp](https://gulpjs.com/) is an alternative to grunt.  
+						- Uses streams from Node.js.
+						- Code over configuration.
+						- Gulp builds faster than Grunt.
+						- Easy to read and use.
+					</textarea>
+				</section>
+				<section data-markdown>
+						<textarea data-template>
+							## How to use Gulp
+							![use-gulp](./images/use-gulp.png)
+						</textarea>
+				</section>
+				<section data-markdown>
+						<textarea data-template>
+							## Gulp API
+							1. gulp.task(name[, deps], fn) 
+							2. gulp.src(globs) 
+							3. gulp.dest(path) 
+							4. gulp.watch(glob[, opts], tasks) 
+							```javascript
+							gulp.task('scripts', function () {
+								return gulp.src('src/app/**/*.js') // Read from filesystem
+								  // In memory transform
+								  .pipe(jshint('.jshintrc'))    // Lint the code
+								  .pipe(concat('app.min.js'))   // Concatenate to one file
+								  .pipe(uglify())               // Minify the file
+								  .pipe(rev())                  // Add revision to filename
+								  .pipe(gulp.dest('dist/app')); // Write to filesystem
+							  });
+							```
+						</textarea>
+					</section>
+				<section data-markdown>
+					<textarea data-template>
+						## How Gulp Works?
+						![gulp-process](./images/gulp-process.png)
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## The Gulpfile
+						```javascript
+							const gulp = require("gulp");
+							const babelify = require("babelify");
+							const browserify = require('browserify');
+							const buffer = require("vinyl-buffer");
+							const source = require('vinyl-source-stream');
+							const rename = require("gulp-rename");
+							const sourceMaps = require("gulp-sourcemaps");
+							const livereload = require("gulp-livereload");
+
+							const config = {
+									src: "./src/main.js",
+									outputDir: "./dist/",
+									mapsDir: "./maps/",
+									outputFile: "bundle.js",
+							};
+
+							gulp.task("moveHTML", function() {
+								return gulp.src("src/*.html")
+									.pipe(gulp.dest(config.outputDir));
+							});
+
+							gulp.task("js", () => {
+								return browserify(config.src)
+										.transform(babelify.configure({
+											presets: ["@babel/preset-env", "@babel/preset-react"]
+										}))
+										.bundle()
+										.pipe(source(config.src))
+										.pipe(buffer())
+										.pipe(rename(config.outputFile))    
+										.pipe(sourceMaps.init({ loadMaps : true })) 
+										.pipe(sourceMaps.write(config.mapsDir))  
+										.pipe(gulp.dest(config.outputDir))
+										.pipe(livereload());  
+							});
+
+							gulp.task('default', gulp.series("moveHTML","js"));
+						```
+						[Click here](https://github.com/razananisathar/keeping-up-with-the-js-part-1/tree/master/build-tools/browserify) for sample codes. 
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## When to use Grunt and Gulp
+						- Grunt most suitable for standard workflow with common tasks.
+						- Gulp is good more complicated tasks.
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Thank You.							
+					</textarea>
+				</section>
+			</div>
+		</div>
+
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true }
+				]
+			});
+		</script>
+	</body>
+</html>

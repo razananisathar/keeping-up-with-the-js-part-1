@@ -1,0 +1,15 @@
+{
+  "name": "build-tools",
+  "version": "1.0.0",
+  "description": "Build tools presentation and sample codes",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "http-server"
+  },
+  "author": "razananisathar",
+  "license": "ISC",
+  "dependencies": {
+    "http-server": "^0.11.1"
+  }
+}

@@ -1,2 +1,5 @@
 .vscode/
 fetch-api/secrets.txt
+build-tools/browserify/node_modules
+build-tools/node_modules
+build-tools/grunt/node_modules
